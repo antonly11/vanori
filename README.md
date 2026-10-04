@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Vanori
 
-## Getting Started
+En lokal prototyp för medarbetares välmående. Byggd med Next.js App Router, strikt TypeScript och Tailwind CSS.
 
-First, run the development server:
+## Starta lokalt
 
-```bash
+Öppna terminalen i projektmappen, där `package.json` finns:
+
+```sh
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Öppna sedan http://localhost:3000. Alla svar är tillfälliga och försvinner när sidan laddas om. Ingen inloggning, databas, AI eller chefsstatistik finns i prototypen.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Flödet
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Introduktion och fyra frivilliga livsområden i en personlig Bullseye.
+- Värderingar uppdateras direkt under besöket och går att ändra i menyn.
+- Fem måendenivåer med olika positiva, neutrala och stödjande vägar.
+- Konkreta små steg för neutrala behov och fördjupning av arbetsbelastning.
+- Flera val kan utforskas ett i taget. Alternativa och egna råd följer med när man går tillbaka.
+- Appens och webbläsarens tillbakaknapp följer den faktiska vägen. Endast en slumpmässig sessionsmarkör och ett löpnummer läggs i webbläsarhistoriken. Svar och privata handlingar ligger i tillfälligt minne och hamnar inte i URL:en.
+- Egna idéer kan väljas direkt. Tydligt angivna promenader, fika och rörelse har valfria, skrivna variationer. Appen tolkar inte värderingstext eller fritext om måendet.
 
-## Learn More
+Alla råd och anpassningar är utkast för psykologgranskning. Prototypen är inte en färdig behandling.
 
-To learn more about Next.js, take a look at the following resources:
+## Kontroller
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```sh
+npm test
+npm run lint
+npx tsc --noEmit
+npm run build -- --webpack
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Testerna använder Nodes inbyggda testverktyg och den befintliga TypeScript-kompilatorn, utan extra beroenden. De kontrollerar navigation, bevarade val, återställning, osäkra svar, stödinnehåll, samtalsguider och Bullseye-positioner. Mobilvy och tangentbord behöver även kontrolleras i webbläsaren.
 
-## Deploy on Vercel
+## Var koden finns
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `src/app`: startsida, layout, färger och ikoner.
+- `src/components/employee`: formulär, val och presentation av stöd.
+- `src/components/ui`: gemensamma knappar.
+- `src/lib/employee`: svarstillstånd, navigationsregler och skrivna stödtexter.
+- `tests`: regressionstester för reglerna bakom flödet.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Läs `AGENTS.md` före fortsatt utveckling. Innan riktiga svar lagras krävs beslut om privat åtkomst, dataminimering, lagringstid och radering. Chefsrapportering kräver dessutom skydd för små grupper och kontroller av organisation och behörighet på servern.
