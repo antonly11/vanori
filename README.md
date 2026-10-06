@@ -1,4 +1,4 @@
-# Vanori, a moment for you
+# Vanori - a moment for you
 
 En mobilanpassad frontendprototyp för medarbetares välmående på jobbet. Vanori kopplar en kort daglig incheckning till personliga värderingar och konkreta små handlingar.
 
