@@ -11,9 +11,16 @@ export type DayScreen = {
   action?: SmallAction;
 };
 export type ExperienceScreen =
-  | { view: "introduction" | "values" }
+  | { view: "introduction" | "values" | "actions" }
   | DayScreen
-  | { view: "setup"; screen: number; editing: boolean; returnTo: DayScreen | { view: "values" } };
+  | { view: "setup"; screen: number; editing: boolean; returnTo: DayScreen | { view: "values" | "actions" } };
+
+export type EmployeeMenuItem = "day" | "values" | "actions";
+
+export function getActiveMenu(screen: ExperienceScreen): EmployeeMenuItem {
+  if (screen.view === "setup") return screen.returnTo.view === "day" ? "values" : screen.returnTo.view;
+  return screen.view === "introduction" ? "values" : screen.view;
+}
 
 export type ScreenHistory = {
   entries: { id: number; screen: ExperienceScreen }[];
@@ -26,7 +33,7 @@ export function createDayScreen(): DayScreen {
   return { view: "day", step: "wellbeing", area: null, need: null };
 }
 
-export function createScreenHistory(screen: ExperienceScreen = { view: "introduction" }): ScreenHistory {
+export function createScreenHistory(screen: ExperienceScreen = createDayScreen()): ScreenHistory {
   return { entries: [{ id: 0, screen }], index: 0, nextId: 1 };
 }
 

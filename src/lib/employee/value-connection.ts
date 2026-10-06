@@ -1,3 +1,4 @@
+import { getScenarioContext, type ScenarioAnswer } from "./scenario-flow";
 import { getSmallActions, hasValue, valueDomains, type ValueDomainId, type ValuesProfile } from "./values";
 import type { StressCategoryId } from "./stress-categories";
 import { hasWorkloadDetail, type WorkloadAnswer, type WorkloadIssueId } from "./workload-flow";
@@ -29,8 +30,10 @@ const areaContexts = {
   other: workloadContexts.other,
 } satisfies Record<StressCategoryId, ConnectionContext>;
 
-export function getValueConnectionContext(areas: readonly StressCategoryId[], answer: WorkloadAnswer): ConnectionContext {
-  if (!areas.includes("workload") || answer.issue === null) return areaContexts[areas[0] ?? "other"];
+export function getValueConnectionContext(areas: readonly StressCategoryId[], answer: WorkloadAnswer, scenario?: ScenarioAnswer): ConnectionContext {
+  const area = areas[0] ?? "other";
+  if (area !== "workload" && scenario) return getScenarioContext(area, scenario) ?? areaContexts[area];
+  if (!areas.includes("workload") || answer.issue === null) return areaContexts[area];
   const context: ConnectionContext = workloadContexts[answer.issue];
   if (!hasWorkloadDetail(answer)) return context;
   if (answer.issue === "pressure" && (answer.detail === "self" || answer.detail === "consequences")) return { ...context, suggestedDomain: "health" };

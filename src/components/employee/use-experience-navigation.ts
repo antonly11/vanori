@@ -8,8 +8,8 @@ function historyState(session: string, entry: number) {
   return { ...(current && typeof current === "object" ? current : {}), vanori: { session, entry } };
 }
 
-export function useExperienceNavigation() {
-  const [history, setHistory] = useState(createScreenHistory);
+export function useExperienceNavigation(initialScreen?: ExperienceScreen) {
+  const [history, setHistory] = useState(() => createScreenHistory(initialScreen));
   const current = useRef(history);
   const session = useRef("");
   const goingBack = useRef(false);
@@ -71,5 +71,5 @@ export function useExperienceNavigation() {
     setHistory(current.current);
   }
 
-  return { screen: history.entries[history.index].screen, navigate, back, reset };
+  return { screen: history.entries[history.index].screen, canGoBack: history.index > 0, navigate, back, reset };
 }

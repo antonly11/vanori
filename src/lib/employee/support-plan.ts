@@ -1,6 +1,7 @@
 import type { StressCategoryId } from "./stress-categories";
 import type { ValueDomainId } from "./values";
 import type { WorkloadAnswer } from "./workload-flow";
+import { getScenarioActions, type ScenarioAnswer } from "./scenario-flow";
 import { getWorkloadSupport } from "./workload-support";
 import { manager, requester, listener, type ConversationGuide } from "./workload-conversations";
 
@@ -50,7 +51,8 @@ const generalActions = {
   ],
 } satisfies Record<Exclude<StressCategoryId, "workload">, readonly SmallAction[]>;
 
-export function getActionSuggestions(area: StressCategoryId, answer: WorkloadAnswer): SmallAction[] {
+export function getActionSuggestions(area: StressCategoryId, answer: WorkloadAnswer, scenario?: ScenarioAnswer): SmallAction[] {
   if (area === "workload") return getWorkloadSupport(answer).map((support) => ({ ...support, source: "example" }));
-  return [...generalActions[area]];
+  const specific = scenario ? getScenarioActions(area, scenario) : null;
+  return [...(specific ?? generalActions[area])];
 }

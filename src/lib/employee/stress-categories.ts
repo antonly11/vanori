@@ -5,7 +5,7 @@
 export const stressCategories = [
   { id: "workload", label: "Arbetsbelastning och krav", description: "Mycket att göra, högt tempo eller press att prestera." },
   { id: "relationships", label: "Relationer och stöd", description: "Samarbete, bemötande eller stöd från chef och kollegor." },
-  { id: "clarity-control", label: "Tydlighet och inflytande", description: "Oklara förväntningar, liten möjlighet att påverka eller oro inför förändringar." },
+  { id: "clarity-control", label: "Otydlighet och påverkan", description: "Oklara förväntningar, liten möjlighet att påverka eller oro inför förändringar." },
   { id: "focus", label: "Arbetsro och fokus", description: "Avbrott, störande miljö eller svårt att koncentrera sig." },
   { id: "motivation", label: "Motivation och uppskattning", description: "Engagemang, meningsfullhet eller att känna sig uppskattad." },
   { id: "recovery", label: "Återhämtning och gränser", description: "Pauser, vila eller svårt att släppa jobbet när dagen är slut." },

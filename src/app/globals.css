@@ -22,6 +22,17 @@
   --color-accent: var(--accent);
   --color-accent-ink: var(--accent-ink);
   --font-sans: var(--font-geist-sans);
+  --radius-control: 0.75rem;
+  --radius-card: 1.5rem;
+  --radius-inset: 1rem;
+  --container-content: 42rem;
+  --container-shell: 72rem;
+  --text-body: 0.875rem;
+  --text-body--line-height: 1.5rem;
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1.25rem;
+  --text-title: 1.25rem;
+  --text-title--line-height: 1.75rem;
 }
 
 body {
@@ -31,7 +42,7 @@ body {
 }
 
 .text-field {
-  @apply block w-full resize-y rounded-xl border border-field-outline bg-background/40 p-3 text-base leading-6 text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent;
+  @apply block w-full resize-y rounded-control border border-field-outline bg-background/40 p-3 text-base leading-6 text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent;
   overflow-wrap: anywhere;
 }
 
@@ -48,7 +59,7 @@ body {
   position: absolute;
   top: 1rem;
   left: 1rem;
-  z-index: 10;
+  z-index: 30;
   padding: 0.75rem 1rem;
   border-radius: 0.5rem;
   background: var(--accent);
@@ -60,4 +71,32 @@ body {
   transform: translateY(0);
   outline: 2px solid var(--foreground);
   outline-offset: 4px;
+}
+
+/* A 4px spacing scale; controls >=44px; shared focus and state treatment. */
+.ui-button {
+  @apply inline-flex min-h-11 items-center justify-center gap-3 rounded-control px-3 py-2 text-sm motion-safe:transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent disabled:cursor-not-allowed disabled:opacity-60;
+}
+.ui-button-primary {
+  @apply min-h-14 bg-accent px-5 py-3 text-base font-semibold text-accent-ink enabled:hover:bg-foreground disabled:bg-outline disabled:text-foreground disabled:opacity-100;
+}
+.ui-button-secondary {
+  @apply min-h-12 border border-field-outline px-4 py-3 font-medium enabled:hover:border-accent;
+}
+.ui-button-text {
+  @apply text-muted enabled:hover:text-foreground;
+}
+.ui-card { @apply min-w-0 border border-outline; }
+.ui-card-surface { @apply rounded-card bg-surface p-4 sm:p-6; }
+.ui-card-inset { @apply rounded-inset bg-background/30 p-3 sm:p-4; }
+.ui-card-quiet { @apply rounded-inset p-3 sm:p-4; }
+.ui-page-heading {
+  @apply max-w-xl break-words text-[2rem] leading-[1.15] font-medium tracking-[-0.045em] outline-none sm:text-[2.75rem];
+}
+.ui-choice {
+  @apply flex h-full min-h-16 items-center gap-3 rounded-control border border-outline p-3 motion-safe:transition-colors hover:border-accent peer-checked:border-accent peer-checked:bg-accent/10 peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-accent sm:p-4;
+}
+.ui-error { @apply border-l-2 border-accent pl-3 text-body text-foreground; }
+.ui-disclosure {
+  @apply min-h-11 cursor-pointer content-center rounded-control py-2 text-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent;
 }

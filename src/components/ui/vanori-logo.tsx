@@ -1,0 +1,11 @@
+export function VanoriLogo({ className = "size-8 text-accent" }: { className?: string }) {
+  return (
+    <svg aria-hidden="true" viewBox="8 10 48 54" className={className} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path
+        d="M18 60C21 53 20 47 17 43C13 36 13 30 17 26C21 20 29 18 35 20C40 22.5 42 26.5 41.5 29.5C40.8 32 44 35 47 38C49 40 47.5 41 45 41.8C42.8 42.5 43.3 44.2 45 45.6C46.4 46.7 43.7 47.2 42.2 47.7C44.5 48.5 44.3 49.8 42.8 50.7C41.5 51.5 43.4 54.2 41 55.1C38.6 56 34.2 53.2 31 52.8C27.5 52.4 26.5 57 28 62"
+      />
+      <path d="M14 26.5C12 24.2 20 21.9 25 24.2C33 28.2 13 34 18 26.5C22 20.5 39 21.3 32 26.5C26 32.5 19 21.7 25 21.3C34 20.9 22 29.8 25 34C29 37.3 35 32.7 32 30.1C28 28.2 24 34 31 35.3" strokeWidth="1.5" />
+      <path d="M30 33C36 29 42 32 40 35C37 38 32 34 35 32C40 29 44 33 43 36" strokeWidth="1.5" />
+    </svg>
+  );
+}

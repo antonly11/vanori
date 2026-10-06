@@ -1,4 +1,7 @@
 import { useId, type FormEvent } from "react";
+import { Card } from "@/components/ui/card";
+import { TextAreaField } from "@/components/ui/text-area-field";
+import { TextButton } from "@/components/ui/secondary-button";
 import { PrimaryButton } from "@/components/ui/primary-button";
 import { alignmentLevels, getSmallActionsText, type Alignment, type ValueAnswer, type ValueDomain, type ValueTextField } from "@/lib/employee/values";
 
@@ -15,18 +18,14 @@ type Props = {
 };
 
 function TextQuestion({ label, hint, example, value, onChange, short = false, limit, rows }: { label: string; hint: string; example: string; value: string; onChange: (value: string) => void; short?: boolean; limit?: number; rows?: number }) {
-  const id = useId();
   const maxLength = limit ?? (short ? 180 : 350);
   return (
     <div>
-      <label htmlFor={id} className="block text-base font-medium leading-6">{label}</label>
-      <p id={`${id}-hint`} className="mt-1 text-sm leading-5 text-muted">{hint}</p>
-      <textarea id={id} value={value} onChange={(event) => onChange(event.target.value.slice(0, maxLength))} maxLength={maxLength} rows={rows ?? (short ? 2 : 3)} aria-describedby={`${id}-hint ${id}-limit`} className="text-field mt-3" />
-      <p id={`${id}-limit`} className="mt-1 text-right text-xs text-muted">{value.length}/{maxLength} tecken</p>
-      <details className="mt-2 rounded-xl border border-outline px-3 text-sm leading-6">
-        <summary aria-label={`Visa exempelsvar för: ${label}`} className="min-h-11 cursor-pointer content-center rounded-sm text-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Visa exempelsvar</summary>
+      <TextAreaField label={label} hint={hint} value={value} onChange={onChange} maxLength={maxLength} rows={rows ?? (short ? 2 : 3)} />
+      <details className="mt-2 rounded-control border border-outline px-3 text-body">
+        <summary aria-label={`Visa exempelsvar för: ${label}`} className="ui-disclosure text-muted">Visa exempelsvar</summary>
         <p className="whitespace-pre-wrap pb-2">{example}</p>
-        <p className="pb-3 text-xs leading-5 text-muted">Ett exempel, inget facit. Använd dina egna ord.</p>
+        <p className="pb-3 text-caption text-muted">Ett exempel, inget facit. Använd dina egna ord.</p>
       </details>
     </div>
   );
@@ -39,7 +38,7 @@ export function ValuesDomainForm({ domain, answer, stage, last, editing, onText,
     if (answer.direction.trim()) onContinue();
   }
   return (
-    <form onSubmit={handleSubmit} className="rounded-3xl border border-outline bg-surface p-5 sm:p-7">
+    <Card><form onSubmit={handleSubmit}>
       <div className="space-y-6">
         {stage === 0 ? <>
           <TextQuestion label={domain.reflectionQuestion} hint={`${domain.reflectionHint} Valfritt.`} example={domain.examples.reflection} value={answer.reflection} onChange={(value) => onText("reflection", value)} />
@@ -56,14 +55,14 @@ export function ValuesDomainForm({ domain, answer, stage, last, editing, onText,
               </label>)}
             </div>
             <div className="mt-2 flex justify-between gap-3 text-xs text-muted"><span>Längre ifrån</span><span>Nära min riktning</span></div>
-            {answer.alignment !== null && <button type="button" onClick={() => onAlignment(null)} className="mt-2 min-h-11 rounded-lg px-2 text-sm text-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-accent">Avstå från skattning</button>}
+            {answer.alignment !== null && <div className="mt-2"><TextButton onClick={() => onAlignment(null)}>Avstå från skattning</TextButton></div>}
           </fieldset>
           <TextQuestion label={domain.actionQuestion} hint="Skriv gärna flera idéer, en per rad. Välj sådant som passar dig och det som är viktigt för dig. Valfritt." example={domain.examples.action} value={getSmallActionsText(answer)} onChange={(value) => onText("action", value)} limit={1000} rows={5} />
           <TextQuestion label={domain.barrierQuestion} hint="Tankar och känslor, eller omständigheter som tid, resurser och stöd. Valfritt." example={domain.examples.barrier} value={answer.barrier} onChange={(value) => onText("barrier", value)} />
         </>}
       </div>
       <div className="mt-6"><PrimaryButton disabled={!answer.direction.trim()}>{stage === 0 ? "Fortsätt" : editing ? "Klar med området" : last ? "Se min Bullseye" : "Nästa område"}</PrimaryButton></div>
-      <button type="button" onClick={onSkip} className="mt-2 min-h-11 w-full rounded-xl text-sm text-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-accent">{editing || answer.direction.trim() ? "Lämna området · behåll svaren" : "Hoppa över området"}</button>
-    </form>
+      <TextButton fullWidth onClick={onSkip}>{editing || answer.direction.trim() ? "Lämna området · behåll svaren" : "Hoppa över området"}</TextButton>
+    </form></Card>
   );
 }
